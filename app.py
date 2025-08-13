@@ -136,6 +136,8 @@ def init_db():
     conn.commit()
     conn.close()
 
+DEFAULT_IMAGE_URL = "https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/default.jpg"
+
 def search_location(query):
     conn = sqlite3.connect('pit_campus.db')
     cursor = conn.cursor()
@@ -147,8 +149,8 @@ def search_location(query):
         name = result[1].lower()
         keywords = result[2].lower()
         image_path = result[4]
-        # Only use the URL as-is (do not use static folder fallback)
-        img_url = image_path
+        # Always use direct URL, fallback to default if empty
+        img_url = image_path if image_path else DEFAULT_IMAGE_URL
         if norm_query in name or norm_query in keywords:
             return {
                 'id': result[0],
@@ -163,7 +165,7 @@ def search_location(query):
     for result in results:
         keywords = result[2].lower().split(', ')
         image_path = result[4]
-        img_url = image_path
+        img_url = image_path if image_path else DEFAULT_IMAGE_URL
         if any(norm_query in k for k in keywords):
             return {
                 'id': result[0],

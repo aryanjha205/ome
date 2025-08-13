@@ -565,9 +565,9 @@
             document.getElementById('locationTitle').textContent = location.name;
             document.getElementById('locationSubtitle').textContent = 'Timing: ' + location.timing;
 
+            // Backend always provides a direct image URL suitable for Vercel
             let imgSrc = location.image_path;
 
-            // Remove fallback image logic: only show the image from backend
             const container = document.getElementById('imageContainer');
             container.innerHTML = `
                 <img src="${imgSrc}" alt="${location.name}" class="location-image"
