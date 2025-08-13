@@ -221,8 +221,13 @@ def api_locations():
 @app.route('/static/images/<path:filename>')
 def serve_image(filename):
     # Serve images from static/images with CORS headers for Vercel
+    import mimetypes
+    mime_type, _ = mimetypes.guess_type(filename)
     response = send_from_directory('static/images', filename)
     response.headers['Access-Control-Allow-Origin'] = '*'
+    if mime_type:
+        response.headers['Content-Type'] = mime_type
+    print(f"Serving image: {filename} (type: {mime_type})")  # Debug log
     return response
 
 if __name__ == '__main__':

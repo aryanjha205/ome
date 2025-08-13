@@ -562,24 +562,22 @@
         function showLocation(location) {
             currentLocation = location;
 
-            // Update header
             document.getElementById('locationTitle').textContent = location.name;
             document.getElementById('locationSubtitle').textContent = 'Timing: ' + location.timing;
 
-            // Determine image src: if starts with http, use as is; else, prepend /static/images/
             let imgSrc = location.image_path;
             if (!/^https?:\/\//.test(imgSrc)) {
                 imgSrc = '/static/images/' + imgSrc.replace(/^.*[\\/]/, '');
             }
 
-            // Create image container content
+            // Use a fallback image if the main image fails to load
+            const fallbackImg = "https://img.icons8.com/ios-filled/100/1e3a8a/school-building.png";
+
             const container = document.getElementById('imageContainer');
             container.innerHTML = `
                 <img src="${imgSrc}" alt="${location.name}" class="location-image"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="image-placeholder" style="display:none;">
-                    🏫
-                </div>
+                     crossorigin="anonymous"
+                     onerror="this.onerror=null;this.src='${fallbackImg}';this.style.background='#f0f0f0';">
                 <div class="location-info">
                     <h4>${location.name}</h4>
                     <p>${location.description}</p>
