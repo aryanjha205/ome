@@ -37,7 +37,7 @@ def init_db():
             'Main Entrance',
             'main gate, entrance, entry, gate, main entrance',
             'The main entrance to Parul Institute of Technology, featuring modern infrastructure and security facilities. The gateway to excellence in technical education.',
-            'static/images/main_entrance.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/main_entrance.jpg',
             'Security Office, Visitor Reception, Parking Area, Information Desk',
             '24/7 Access',
             '22.2587° N, 73.2119° E'
@@ -46,7 +46,7 @@ def init_db():
             'Technical Library',
             'library, books, study, reading, technical library, e-library',
             'Comprehensive technical library with extensive collection of engineering books, journals, and digital resources. Perfect environment for research and study.',
-            'static/images/library.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/library.jpg',
             'Technical Books Collection, Digital Library, Research Section, Study Rooms, Internet Access',
             'Mon-Sun: 8:00 AM - 10:00 PM',
             '22.2590° N, 73.2125° E'
@@ -55,7 +55,7 @@ def init_db():
             'Computer Engineering Lab',
             'computer lab, lab, programming, computers, ce lab, software lab',
             'State-of-the-art computer engineering laboratory equipped with latest hardware and software for programming, development, and research activities.',
-            'static/images/computer_lab.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/computer_lab.jpg',
             '50 High-end Workstations, Latest Software Tools, Project Development Area, Network Lab',
             'Mon-Fri: 9:00 AM - 6:00 PM, Sat: 9:00 AM - 2:00 PM',
             '22.2592° N, 73.2130° E'
@@ -64,7 +64,7 @@ def init_db():
             'Electronics & Communication Lab',
             'ec lab, electronics lab, communication lab, circuits lab, embedded lab',
             'Advanced electronics and communication laboratory with modern equipment for circuit design, embedded systems, and communication experiments.',
-            'static/images/ec_lab.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/ec_lab.jpg',
             'Circuit Design Workstations, Oscilloscopes, Signal Generators, Embedded Systems Kits, PCB Design Tools',
             'Mon-Fri: 9:00 AM - 6:00 PM, Sat: 9:00 AM - 2:00 PM',
             '22.2594° N, 73.2128° E'
@@ -73,7 +73,7 @@ def init_db():
             'Mechanical Workshop',
             'mechanical lab, workshop, machine shop, manufacturing lab, mech lab',
             'Well-equipped mechanical workshop with various machines and tools for manufacturing, machining, and hands-on learning experiences.',
-            'static/images/mech_workshop.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/mech_workshop.jpg',
             'CNC Machines, Lathe Machines, Milling Machines, Welding Setup, CAD/CAM Lab',
             'Mon-Fri: 9:00 AM - 5:00 PM, Sat: 9:00 AM - 1:00 PM',
             '22.2596° N, 73.2132° E'
@@ -82,7 +82,7 @@ def init_db():
             'Student Hostels',
             'hostel, accommodation, rooms, dormitory, residence, boys hostel, girls hostel',
             'Comfortable accommodation facilities for students with modern amenities. Separate hostels for boys and girls with 24/7 security and mess facilities.',
-            'static/images/hostels.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/hostels.jpg',
             'AC/Non-AC Rooms, Wi-Fi, Mess Hall, 24/7 Security, Laundry, Study Room, Recreation Area',
             '24/7 Access for Residents',
             '22.2585° N, 73.2140° E'
@@ -91,7 +91,7 @@ def init_db():
             'Institute Cafeteria',
             'cafeteria, food, dining, canteen, mess, restaurant, food court',
             'Spacious cafeteria serving variety of cuisines at affordable prices. Clean, hygienic food preparation with comfortable seating arrangements.',
-            'static/images/cafeteria.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/cafeteria.jpg',
             'Multi-cuisine Food, AC Dining Area, Snacks Counter, Beverages, Outdoor Seating',
             'Mon-Sun: 7:00 AM - 10:00 PM',
             '22.2588° N, 73.2122° E'
@@ -100,7 +100,7 @@ def init_db():
             'Sports & Recreation Center',
             'sports, gym, playground, basketball, cricket, badminton, fitness center, sports center, recreation center',
             'Modern sports complex with indoor and outdoor facilities for various sports and fitness activities. Promotes physical wellness among students.',
-            'static/images/sports_center.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/sports_center.jpg',
             'Basketball Court, Badminton Court, Table Tennis, Gymnasium, Cricket Ground, Fitness Equipment',
             'Mon-Sun: 6:00 AM - 9:00 PM',
             '22.2595° N, 73.2135° E'
@@ -109,7 +109,7 @@ def init_db():
             'Auditorium',
             'auditorium, seminar hall, conference hall, events, presentations',
             'Modern auditorium with advanced audio-visual facilities for seminars, conferences, cultural events, and guest lectures.',
-            'static/images/auditorium.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/auditorium.jpg',
             'Seating for 500, Advanced AV System, Air Conditioning, Stage with Projectors, Sound System',
             'Event-based Access, Mon-Fri: 9:00 AM - 6:00 PM',
             '22.2591° N, 73.2127° E'
@@ -118,7 +118,7 @@ def init_db():
             'Administrative Block',
             'admin, office, admission, accounts, principal office, administration, admin block',
             'Central administrative building housing all administrative offices including admissions, accounts, principal office, and student services.',
-            'static/images/admin_block.jpg',
+            'https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/admin_block.jpg',
             'Admission Office, Accounts Department, Principal Office, Student Services, Examination Cell',
             'Mon-Fri: 9:00 AM - 5:00 PM, Sat: 9:00 AM - 1:00 PM',
             '22.2589° N, 73.2124° E'
