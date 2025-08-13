@@ -147,11 +147,8 @@ def search_location(query):
         name = result[1].lower()
         keywords = result[2].lower()
         image_path = result[4]
-        # Always use /static/images/filename for local images
-        if image_path.startswith('http'):
-            img_url = image_path
-        else:
-            img_url = '/static/images/' + os.path.basename(image_path)
+        # Only use the URL as-is (do not use static folder fallback)
+        img_url = image_path
         if norm_query in name or norm_query in keywords:
             return {
                 'id': result[0],
@@ -166,10 +163,7 @@ def search_location(query):
     for result in results:
         keywords = result[2].lower().split(', ')
         image_path = result[4]
-        if image_path.startswith('http'):
-            img_url = image_path
-        else:
-            img_url = '/static/images/' + os.path.basename(image_path)
+        img_url = image_path
         if any(norm_query in k for k in keywords):
             return {
                 'id': result[0],
@@ -221,25 +215,8 @@ def api_locations():
     locations = [{'name': row[0], 'description': row[1]} for row in results]
     return jsonify(locations)
 
-@app.route('/static/images/<path:filename>')
-def serve_image(filename):
-    # Serve images from static/images with CORS headers for Vercel
-    import mimetypes
-    mime_type, _ = mimetypes.guess_type(filename)
-    # Use absolute path to static/images for Vercel compatibility
-    image_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'images')
-    response = send_from_directory(image_dir, filename)
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    if mime_type:
-        response.headers['Content-Type'] = mime_type
-    return response
-
 if __name__ == '__main__':
-    # Create directories if they don't exist
-    os.makedirs('templates', exist_ok=True)
-    os.makedirs('static/css', exist_ok=True)
-    os.makedirs('static/js', exist_ok=True)
-    os.makedirs('static/images', exist_ok=True)
+    # Remove directory creation logic
     
     # Initialize database
     init_db()
