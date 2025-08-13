@@ -7,6 +7,7 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "wsgi.py" },
     { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/static/images/(.*)", "dest": "/static/images/$1" },
     { "src": "/", "dest": "/index.html" }
   ]
 }

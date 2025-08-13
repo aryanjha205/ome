@@ -226,7 +226,9 @@ def serve_image(filename):
     # Serve images from static/images with CORS headers for Vercel
     import mimetypes
     mime_type, _ = mimetypes.guess_type(filename)
-    response = send_from_directory(os.path.join(app.root_path, 'static/images'), filename)
+    # Use absolute path to static/images for Vercel compatibility
+    image_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'images')
+    response = send_from_directory(image_dir, filename)
     response.headers['Access-Control-Allow-Origin'] = '*'
     if mime_type:
         response.headers['Content-Type'] = mime_type
