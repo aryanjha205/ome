@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parul Institute of Technology - Virtual Campus Tour</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* <-- changed from center to flex-start */
+            gap: 1rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            /* Remove justify-content if present */
+        }
+
+        .institute-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            min-height: calc(100vh - 120px);
+            align-items: stretch; /* Ensure both columns have equal height */
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;         /* Fill parent height */
+            min-height: 500px;    /* Match image container height */
+            max-height: none;     /* Remove previous max-height */
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .bot-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .chat-messages {
+            flex: 1;
+            max-height: 450px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding-right: 0.5rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bot-message {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 1rem;
+            border-radius: 15px 15px 15px 5px;
+            border-left: 4px solid #3b82f6;
+            margin-right: 2rem;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px 15px 5px 15px;
+            margin-left: 2rem;
+            text-align: right;
+        }
+
+        .quick-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .quick-btn {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e5e5e5;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #3b82f6;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .tour-viewer {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .viewer-header {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .location-image:hover {
+            transform: scale(1.02);
+        }
+
+        .welcome-screen {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            color: #666;
+        }
+
+        .welcome-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .location-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .location-details {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 15px;
+        }
+
+        .facility-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .facility-item {
+            background: #f1f5f9;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .voice-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .voice-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .voice-btn:hover {
+            background: #047857;
+            transform: scale(1.1);
+        }
+
+        .voice-btn.recording {
+            background: #dc3545;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .image-container {
+                height: 300px;
+            }
+            
+            .quick-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .facility-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="https://logowik.com/content/uploads/images/parul-university3698.jpg"
+                     alt="Parul Institute of Technology Logo"
+                     style="width:60px;height:60px;border-radius:12px;box-shadow:0 4px 15px rgba(59,130,246,0.3);object-fit:cover;">
+                <div class="header-text">
+                    <h1>Parul Institute of Technology</h1>
+                    <p>Virtual Campus Tour - Explore our state-of-the-art facilities</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="bot-avatar">🤖</div>
+                <h3>PIT Campus Guide</h3>
+                <p>Ask me about any location on our campus!</p>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message">
+                    <div class="bot-message">
+                        Welcome to Parul Institute of Technology! I'm your virtual campus guide. You can ask me about different locations on our campus, and I'll show you detailed information with images. Try asking about our labs, hostels, cafeteria, or sports facilities!
+                    </div>
+                </div>
+            </div>
+
+            <div class="voice-controls">
+                <button class="voice-btn" id="voiceBtn" title="Voice Input">🎤</button>
+                <button class="voice-btn" id="speakBtn" title="Speak Response">🔊</button>
+            </div>
+
+            <div class="quick-buttons">
+                <button class="quick-btn" onclick="askLocation('Main Entrance')">🏛️ Main Entrance</button>
+                <button class="quick-btn" onclick="askLocation('Library')">📚 Library</button>
+                <button class="quick-btn" onclick="askLocation('Computer Lab')">💻 Computer Lab</button>
+                <button class="quick-btn" onclick="askLocation('EC Lab')">⚡ EC Lab</button>
+                <button class="quick-btn" onclick="askLocation('Mechanical Workshop')">🔧 Mech Workshop</button>
+                <button class="quick-btn" onclick="askLocation('Hostel')">🏠 Hostels</button>
+                <button class="quick-btn" onclick="askLocation('Cafeteria')">🍽️ Cafeteria</button>
+                <button class="quick-btn" onclick="askLocation('Sports & Recreation Center')">🏀 Sports & Recreation Center</button>
+                <button class="quick-btn" onclick="askLocation('Auditorium')">🎭 Auditorium</button>
+                <button class="quick-btn" onclick="askLocation('Administrative Block')">🏢 Administrative Block</button>
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ask about any campus location...">
+                <button class="send-btn" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+
+        <div class="tour-viewer">
+            <div class="viewer-header">
+                <h3 id="locationTitle">Virtual Campus Tour</h3>
+                <p id="locationSubtitle">Select a location to start your tour</p>
+            </div>
+            <div class="image-container" id="imageContainer">
+                <div class="welcome-screen">
+                    <div class="welcome-icon">🏫</div>
+                    <h3>Welcome to Parul Institute of Technology</h3>
+                    <p>Ask the chatbot about any campus location to start your virtual tour</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLocation = null;
+        let recognition = null;
+        let isRecording = false;
+
+        // Initialize speech recognition if available
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
+                isRecording = true;
+                document.getElementById('voiceBtn').classList.add('recording');
+            };
+
+            recognition.onend = function() {
+                isRecording = false;
+                document.getElementById('voiceBtn').classList.remove('recording');
+            };
+
+            recognition.onresult = function(event) {
+                let transcript = event.results[0][0].transcript;
+                // Remove trailing punctuation (period, comma, etc.)
+                transcript = transcript.replace(/[.,!?;:]+$/, '').trim();
+                document.getElementById('chatInput').value = transcript;
+                sendMessage();
+            };
+        }
+
+        // Voice input
+        document.getElementById('voiceBtn').addEventListener('click', function() {
+            if (recognition) {
+                if (isRecording) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            } else {
+                alert('Speech recognition not supported in this browser');
+            }
+        });
+
+        // Text to speech
+        document.getElementById('speakBtn').addEventListener('click', function() {
+            const messages = document.querySelectorAll('.bot-message');
+            if (messages.length > 0) {
+                const lastMessage = messages[messages.length - 1].textContent;
+                speak(lastMessage);
+            }
+        });
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function addMessage(message, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = isUser ? 'user-message' : 'bot-message';
+            messageContent.textContent = message;
+            
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showLocation(location) {
+            currentLocation = location;
+            
+            // Update header
+            document.getElementById('locationTitle').textContent = location.name;
+            document.getElementById('locationSubtitle').textContent = 'Timing: ' + location.timing;
+            
+            // Create image container content
+            const container = document.getElementById('imageContainer');
+            container.innerHTML = `
+                <img src="${location.image_path}" alt="${location.name}" class="location-image" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="image-placeholder" style="display:none;">
+                    🏫
+                </div>
+                <div class="location-info">
+                    <h4>${location.name}</h4>
+                    <p>${location.description}</p>
+                </div>
+            `;
+            
+            // Add location details below the image
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'location-details';
+            detailsDiv.innerHTML = `
+                <h4 style="color: #1e3a8a; margin-bottom: 1rem;">📍 Location Details</h4>
+                <div style="margin-bottom: 1rem;">
+                    <strong>⏰ Timing:</strong> ${location.timing}
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <strong>🏢 Facilities:</strong>
+                    <div class="facility-list">
+                        ${location.facilities.map(facility => `
+                            <div class="facility-item">
+                                <span>✓</span> ${facility}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ${location.coordinates ? `
+                    <div>
+                        <strong>🗺️ Coordinates:</strong> ${location.coordinates}
+                    </div>
+                ` : ''}
+            `;
+            
+            container.parentNode.appendChild(detailsDiv);
+        }
+
+        function showLoading() {
+            const container = document.getElementById('imageContainer');
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading location...</p>
+                </div>
+            `;
+            
+            // Remove any existing details
+            const existingDetails = container.parentNode.querySelector('.location-details');
+            if (existingDetails) {
+                existingDetails.remove();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            // Remove trailing punctuation from input value
+            let query = input.value.trim().replace(/[.,!?;:]+$/, '');
+            if (!query) return;
+            
+            // Add user message
+            addMessage(query, true);
+            input.value = '';
+            
+            // Show loading
+            showLoading();
+            
+            // Send API request
+            fetch('/api/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessage(data.message, false);
+                
+                if (data.success && data.location) {
+                    showLocation(data.location);
+                    // Auto-speak the response
+                    setTimeout(() => speak(data.message), 500);
+                } else {
+                    // Show welcome screen again for failed searches
+                    const container = document.getElementById('imageContainer');
+                    container.innerHTML = `
+                        <div class="welcome-screen">
+                            <div class="welcome-icon">❓</div>
+                            <h3>Location Not Found</h3>
+                            <p>Try asking about: Labs, Library, Hostels, Cafeteria, Sports Center, etc.</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                addMessage('Sorry, there was an error processing your request. Please try again.', false);
+            });
+        }
+
+        // Ensure askLocation always queries backend
+        function askLocation(locationName) {
+            document.getElementById('chatInput').value = locationName;
+            sendMessage();
+        }
+
+        // Add some initial helpful suggestions
+        setTimeout(() => {
+            addMessage("💡 Quick tip: You can click on any of the location buttons below or type questions like 'Show me the computer lab' or 'Where is the cafeteria?'", false);
+        }, 1000);
+    </script>
+</body>
+</html>
