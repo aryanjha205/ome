@@ -567,14 +567,11 @@
 
             let imgSrc = location.image_path;
 
-            // Use a generic fallback image for all locations
-            const fallbackImg = "https://raw.githubusercontent.com/aryanjha205/ome/main/static/images/main_entrance.jpg";
-
+            // Remove fallback image logic: only show the image from backend
             const container = document.getElementById('imageContainer');
             container.innerHTML = `
                 <img src="${imgSrc}" alt="${location.name}" class="location-image"
-                     crossorigin="anonymous"
-                     onerror="this.onerror=null;this.src='${fallbackImg}';this.style.background='#f0f0f0';">
+                     crossorigin="anonymous">
                 <div class="location-info">
                     <h4>${location.name}</h4>
                     <p>${location.description}</p>
