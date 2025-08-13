@@ -561,13 +561,20 @@
 
         function showLocation(location) {
             currentLocation = location;
-            
+
             // Update header
             document.getElementById('locationTitle').textContent = location.name;
             document.getElementById('locationSubtitle').textContent = 'Timing: ' + location.timing;
-            
-            // Create image container content
+
+            // Remove any existing details before adding new
             const container = document.getElementById('imageContainer');
+            const parent = container.parentNode;
+            const existingDetails = parent.querySelector('.location-details');
+            if (existingDetails) {
+                existingDetails.remove();
+            }
+
+            // Create image container content
             container.innerHTML = `
                 <img src="${location.image_path}" alt="${location.name}" class="location-image" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -604,8 +611,7 @@
                     </div>
                 ` : ''}
             `;
-            
-            container.parentNode.appendChild(detailsDiv);
+            parent.appendChild(detailsDiv);
         }
 
         function showLoading() {
