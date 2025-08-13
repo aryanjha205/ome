@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
 import sqlite3
 import os
+import requests
 
 # Add CORS support
 try:
@@ -139,6 +140,13 @@ def init_db():
 # Use a public placeholder image that always exists
 DEFAULT_IMAGE_URL = "https://placehold.co/800x500?text=Image+Not+Found"
 
+def is_image_accessible(url):
+    try:
+        resp = requests.head(url, timeout=2)
+        return resp.status_code == 200 and resp.headers.get("Content-Type", "").startswith("image/")
+    except Exception:
+        return False
+
 def search_location(query):
     conn = sqlite3.connect('pit_campus.db')
     cursor = conn.cursor()
@@ -150,8 +158,8 @@ def search_location(query):
         name = result[1].lower()
         keywords = result[2].lower()
         image_path = result[4]
-        # Use direct URL, fallback to placeholder if empty or not a valid URL
-        img_url = image_path if (image_path and image_path.startswith("http")) else DEFAULT_IMAGE_URL
+        # Check if image URL is accessible, else use placeholder
+        img_url = image_path if (image_path and image_path.startswith("http") and is_image_accessible(image_path)) else DEFAULT_IMAGE_URL
         if norm_query in name or norm_query in keywords:
             return {
                 'id': result[0],
@@ -166,7 +174,7 @@ def search_location(query):
     for result in results:
         keywords = result[2].lower().split(', ')
         image_path = result[4]
-        img_url = image_path if (image_path and image_path.startswith("http")) else DEFAULT_IMAGE_URL
+        img_url = image_path if (image_path and image_path.startswith("http") and is_image_accessible(image_path)) else DEFAULT_IMAGE_URL
         if any(norm_query in k for k in keywords):
             return {
                 'id': result[0],
