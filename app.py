@@ -140,7 +140,6 @@ def search_location(query):
     conn = sqlite3.connect('pit_campus.db')
     cursor = conn.cursor()
     norm_query = query.lower().strip()
-    # Try exact and partial matches in name and keywords
     cursor.execute('SELECT * FROM locations')
     results = cursor.fetchall()
     conn.close()
@@ -148,15 +147,17 @@ def search_location(query):
         name = result[1].lower()
         keywords = result[2].lower()
         image_path = result[4]
-        # If image_path is not a URL, use /static/images/filename
-        if not image_path.startswith('http'):
-            image_path = '/static/images/' + os.path.basename(image_path)
+        # Always use /static/images/filename for local images
+        if image_path.startswith('http'):
+            img_url = image_path
+        else:
+            img_url = '/static/images/' + os.path.basename(image_path)
         if norm_query in name or norm_query in keywords:
             return {
                 'id': result[0],
                 'name': result[1],
                 'description': result[3],
-                'image_path': image_path,
+                'image_path': img_url,
                 'facilities': result[5].split(', '),
                 'timing': result[6],
                 'coordinates': result[7]
@@ -165,14 +166,16 @@ def search_location(query):
     for result in results:
         keywords = result[2].lower().split(', ')
         image_path = result[4]
-        if not image_path.startswith('http'):
-            image_path = '/static/images/' + os.path.basename(image_path)
+        if image_path.startswith('http'):
+            img_url = image_path
+        else:
+            img_url = '/static/images/' + os.path.basename(image_path)
         if any(norm_query in k for k in keywords):
             return {
                 'id': result[0],
                 'name': result[1],
                 'description': result[3],
-                'image_path': image_path,
+                'image_path': img_url,
                 'facilities': result[5].split(', '),
                 'timing': result[6],
                 'coordinates': result[7]
@@ -223,11 +226,10 @@ def serve_image(filename):
     # Serve images from static/images with CORS headers for Vercel
     import mimetypes
     mime_type, _ = mimetypes.guess_type(filename)
-    response = send_from_directory('static/images', filename)
+    response = send_from_directory(os.path.join(app.root_path, 'static/images'), filename)
     response.headers['Access-Control-Allow-Origin'] = '*'
     if mime_type:
         response.headers['Content-Type'] = mime_type
-    print(f"Serving image: {filename} (type: {mime_type})")  # Debug log
     return response
 
 if __name__ == '__main__':

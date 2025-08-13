@@ -566,9 +566,6 @@
             document.getElementById('locationSubtitle').textContent = 'Timing: ' + location.timing;
 
             let imgSrc = location.image_path;
-            if (!/^https?:\/\//.test(imgSrc)) {
-                imgSrc = '/static/images/' + imgSrc.replace(/^.*[\\/]/, '');
-            }
 
             // Use a fallback image if the main image fails to load
             const fallbackImg = "https://img.icons8.com/ios-filled/100/1e3a8a/school-building.png";
@@ -583,7 +580,12 @@
                     <p>${location.description}</p>
                 </div>
             `;
-            
+
+            // Remove any existing details before adding new
+            const parent = container.parentNode;
+            const oldDetails = parent.querySelector('.location-details');
+            if (oldDetails) oldDetails.remove();
+
             // Add location details below the image
             const detailsDiv = document.createElement('div');
             detailsDiv.className = 'location-details';
@@ -608,8 +610,7 @@
                     </div>
                 ` : ''}
             `;
-            
-            container.parentNode.appendChild(detailsDiv);
+            parent.appendChild(detailsDiv);
         }
 
         function showLoading() {
