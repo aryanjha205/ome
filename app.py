@@ -118,7 +118,7 @@ def init_db():
             'Administrative Block',
             'admin, office, admission, accounts, principal office, administration, admin block',
             'Central administrative building housing all administrative offices including admissions, accounts, principal office, and student services.',
-            'https://github.com/aryanjha205/ome/blob/main/static/images/admin_block.jpg',
+            'https://github.com/aryanjha205/ome/blob/153ed40f40567b922370d41151d38d687ce459de/static/images/admin_block.jpg',
             'Admission Office, Accounts Department, Principal Office, Student Services, Examination Cell',
             'Mon-Fri: 9:00 AM - 5:00 PM, Sat: 9:00 AM - 1:00 PM',
             '22.2589° N, 73.2124° E'
@@ -233,4 +233,5 @@ if __name__ == '__main__':
     
 
     app.run(debug=True, host='0.0.0.0', port=5000)
+
 
