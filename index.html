@@ -566,17 +566,16 @@
             document.getElementById('locationTitle').textContent = location.name;
             document.getElementById('locationSubtitle').textContent = 'Timing: ' + location.timing;
 
-            // Remove any existing details before adding new
-            const container = document.getElementById('imageContainer');
-            const parent = container.parentNode;
-            const existingDetails = parent.querySelector('.location-details');
-            if (existingDetails) {
-                existingDetails.remove();
+            // Determine image src: if starts with http, use as is; else, prepend /static/images/
+            let imgSrc = location.image_path;
+            if (!/^https?:\/\//.test(imgSrc)) {
+                imgSrc = '/static/images/' + imgSrc.replace(/^.*[\\/]/, '');
             }
 
             // Create image container content
+            const container = document.getElementById('imageContainer');
             container.innerHTML = `
-                <img src="${location.image_path}" alt="${location.name}" class="location-image" 
+                <img src="${imgSrc}" alt="${location.name}" class="location-image"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="image-placeholder" style="display:none;">
                     🏫
@@ -611,7 +610,8 @@
                     </div>
                 ` : ''}
             `;
-            parent.appendChild(detailsDiv);
+            
+            container.parentNode.appendChild(detailsDiv);
         }
 
         function showLoading() {

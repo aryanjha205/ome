@@ -147,12 +147,16 @@ def search_location(query):
     for result in results:
         name = result[1].lower()
         keywords = result[2].lower()
+        image_path = result[4]
+        # If image_path is not a URL, use /static/images/filename
+        if not image_path.startswith('http'):
+            image_path = '/static/images/' + os.path.basename(image_path)
         if norm_query in name or norm_query in keywords:
             return {
                 'id': result[0],
                 'name': result[1],
                 'description': result[3],
-                'image_path': result[4],
+                'image_path': image_path,
                 'facilities': result[5].split(', '),
                 'timing': result[6],
                 'coordinates': result[7]
@@ -160,12 +164,15 @@ def search_location(query):
     # fallback: try if any keyword contains the query as a word
     for result in results:
         keywords = result[2].lower().split(', ')
+        image_path = result[4]
+        if not image_path.startswith('http'):
+            image_path = '/static/images/' + os.path.basename(image_path)
         if any(norm_query in k for k in keywords):
             return {
                 'id': result[0],
                 'name': result[1],
                 'description': result[3],
-                'image_path': result[4],
+                'image_path': image_path,
                 'facilities': result[5].split(', '),
                 'timing': result[6],
                 'coordinates': result[7]
@@ -213,8 +220,10 @@ def api_locations():
 
 @app.route('/static/images/<path:filename>')
 def serve_image(filename):
-    # Serve images from static/images
-    return send_from_directory('static/images', filename)
+    # Serve images from static/images with CORS headers for Vercel
+    response = send_from_directory('static/images', filename)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 if __name__ == '__main__':
     # Create directories if they don't exist
